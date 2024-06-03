@@ -169,6 +169,17 @@ app.get('/restablecer/:token', (req, res) => {
     });
 });
 
+// Manejar errores 404
+app.use((req, res, next) => {
+  res.status(404).render('404', { title: 'Página no encontrada' });
+});
+
+// Manejar errores 500
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('500', { title: 'Error interno del servidor' });
+});
+
 app.post('/restablecer/:token', (req, res) => {
     const { token } = req.params;
     const { nuevaContrasena } = req.body;
